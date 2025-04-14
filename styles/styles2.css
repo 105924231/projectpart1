@@ -52,10 +52,9 @@ img {
 /* Navigation Bar Styles */
 .navbar {
     background: #fff; /* white background */
-    padding: 20px;
-
+    padding: 20px; /* padding around the navbar */
+    justify-content: space-between; /* spaces out the items in the navbar */
 }
-
 
 /* Images/logos Styles */
 .logos {
@@ -80,12 +79,15 @@ h1 {
     color: black;
     font-size: 2em;
     font-weight: bold;
+    text-align: center; /* centers the heading */
+    margin: 20px 0; /* adds margin around the heading */
 }
 
 h2 {
     color: black (0, 128, 128);
     font-size: 1.5em;
     font-weight: bold;
+    text-align: left; /* heading is to the left */
 }
 
 h1, h2, h3 {
@@ -130,7 +132,7 @@ footer {
     color: white; 
     padding: 20px; /* padding around the footer */
     text-align: center; /* centers the text in the footer */
-    position: fixed; 
+    position: fixed;   /* fixes the footer at the bottom of the page */ 
     bottom: 0; /* positions the footer at the bottom */
     width: 100%; /* makes the footer full width */
 }
@@ -138,6 +140,12 @@ footer {
 footer p {
     margin: 0; /* removes default margin from paragraph */
     font-size: 14px; /* sets font size for the footer text */
+}
+
+footer {
+    font-style: bold;
+    font-size: 16px; /* sets font size for the footer text */
+    color: #f6f5f3; /* light gray */
 }
 
 nav a {
@@ -174,9 +182,12 @@ footer {
     background-color:#18435D;
     color: white;
     text-decoration: none;
-    padding: 20px;
+    padding: 9px;
     text-align: center;
     width: 100%;
+    color: white;
+    font-size: 11px; /* sets font size for the footer text */
+    font-style: bold;
 }
 
 .footer-links {
@@ -199,4 +210,96 @@ footer {
 
 .student-id {
     text-align: right;
+}
+
+image logos-container{
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100vw;
+    padding-bottom: 20px;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.form-grid fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h1, h2 {
+    font-family: Arial, sans-serif;;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center; /* centers the heading */
+    margin: 20px 0; /* adds margin around the heading */
+}
+
+h3 {
+    color: black (0, 128, 128);
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: left; /* heading is to the left */
+}
+
+/* for the jobs.html page */
+.job-listing {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* adds space between job listings */
+    margin: 20px 0; 
+    padding: 20px; 
+    background-color: #fff; /* white background for job listing */
+}
+.job-listing h3 {
+    color: #2F4F4F; /* dark slate gray */
+    font-size: 1.5em; /* sets font size for job title */
+    font-weight: bold; /* makes the job title bold */
+    margin: 0; 
+    line-height: 1.2; 
+}
+.job-listing p {
+    color: #333; /* dark grey */
+    font-size: 1em; 
+    margin: 5px 0; /* adds margin around the job description */
+    line-height: 1.5; 
+    font-family: Arial, sans-serif; /* sets font family for job description */
+}
+.job-listing a {
+    color: #2F4F4F; /* dark slate gray */
+    text-decoration: none; /* removes underline from links */
+    font-weight: bold; /* makes the link bold */
+    margin-top: 5px; /* adds margin above the link */
+    padding: 5px 10px; /* adds padding around the link */
+}
+.job-listing a:hover {
+    text-decoration: underline; /* underlines the link on hover */
+}
+
+image dollar-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* sets height to full viewport height */
+    background-color: #f6f5f3; /* light gray background */
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100vw;
+    padding-bottom: 20px;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
 }
