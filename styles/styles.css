@@ -105,7 +105,6 @@ header h1 {
 
 input[type="checkbox"] {
     appearance: none;
-    -webkit-appearance: none;
     width: 15px;
     height: 15px;
     border-radius: 4px;
@@ -123,7 +122,6 @@ input[type="checkbox"]:checked {
 
 input[type="radio"] {
     appearance: none;
-    -webkit-appearance: none;
     width: 15px;
     height: 15px;
     border: 2px solid #18435D;
@@ -213,7 +211,6 @@ input[type="reset"]:hover {
     gap: 0;
     padding: 0;
     margin: 0;
-    -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
 }
 
@@ -338,7 +335,6 @@ footer {
     gap: 0;
     padding: 0;
     margin: 0;
-    -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
 }
 
@@ -429,4 +425,6 @@ footer {
 #group-photo {
     float: right;
     border: 2px solid #2677a8;
+    height: 200px;
+    width: 275px;
 }
