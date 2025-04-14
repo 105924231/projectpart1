@@ -3,7 +3,7 @@ filename: styles2.css
 author: Sophie Kroezen & Akhila Sripriyadarshini Gollamudi
 created: 08/04/2025
 last modified: 09/04/2025
-description: refers to projectpart1-1, index.html
+description: refers to projectpart1-1, index.html and jobs.html
 */
 
 /* Body Styles- has margins and padding */
@@ -11,6 +11,14 @@ description: refers to projectpart1-1, index.html
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
+    background-image: url('image/melb_city.png'); /* background image */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed; /* keeps the background image fixed when scrolling */
+    background-size: cover; /* covers the entire viewport of webpage */;
 }
 
 body {
@@ -23,7 +31,6 @@ body {
 a {
     text-decoration: none; /* removes underline from links */
     color: #333;   /* dark grey */
-
 }
 
 ul {
