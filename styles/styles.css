@@ -6,6 +6,7 @@ last modified 09/04/2025
 description: style sheet for about.html and apply.html
 */
 
+/*apply page styling */
 * {
     font-family: 'Public Sans', sans-serif;
     background-color: #f6f5f3;
@@ -156,6 +157,9 @@ input[type="reset"]:hover {
     color: #f6f5f3;
     background-color: #18435b;
 }
+
+
+/* about page styling */
 
 .akhila-table {
     border: 2px solid #18435D;
