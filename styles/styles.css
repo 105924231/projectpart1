@@ -12,10 +12,6 @@ description: style sheet for about.html and apply.html
     background-color: #f6f5f3;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a21bfad3de3bd48de454c65dafddef08c64233e7
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -305,33 +301,6 @@ input[type="reset"]:hover {
     max-width: 40%;
 }
 
-footer {
-    background-color:#18435D;
-    color: white;
-    text-decoration: none;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-}
-
-.footer-links {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    background-color: #18435D;
-}
-
-.footer-links li {
-    margin: 0 0;
-    background-color: #18435D;
-}
-
-.footer-links a {
-    color:#f6f5f3;
-    text-decoration: none;
-    background-color: #18435D;
-}
-
 .sophie-favs {
     display: flex;
     justify-content: flex-start;
@@ -434,4 +403,212 @@ footer {
     border: 2px solid #2677a8;
     height: 200px;
     width: 275px;
+}
+
+
+
+
+
+
+
+/* Akhila's CSS merged into this file. Some minor changes were made on 14/04/2025 by Sophie to ensure no interference between files. */
+
+body {
+    background-image: url('image/melb_city.png'); /* background image */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed; /* keeps the background image fixed when scrolling */
+    background-size: cover; /* covers the entire viewport of webpage */;
+}
+
+a {
+    text-decoration: none; /* removes underline from links */
+    color: #333;   /* dark grey */
+}
+
+ul {
+    list-style: none; /* removes bullets from list items */
+}
+
+.icons {
+    max-width: 100%; /* makes images responsive when the website changes */
+    height: 40px;
+    width: 60px
+}
+
+/* Utility Class for Centering */
+.container {
+    max-width: 1100px; /* maximum width of the container */
+    margin: 0 auto; /* centers the container horizontally */
+    padding: 0 15px; /* adds padding inside the container */
+}
+
+/* Images/logos Styles */
+.logos {
+    display: flex;
+    justify-content: center; /* horizontally centers the images */
+    align-items: center; /* vertically centers the images */
+  }
+  
+.logos img {
+    flex-basis: 50%; /* sets the width of the images */
+    padding: 50px 50px;
+  }
+
+/* Heading Styles */
+h1 {
+    color: black;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center; /* centers the heading */
+    margin: 20px 0; /* adds margin around the heading */
+}
+
+h2 {
+    color: black;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: left; /* heading is to the left */
+}
+
+#headingsinfo {
+    color: red;
+}   
+
+#introduction {
+    text-align: center;
+}
+
+#images {
+    text-align : center;
+    }
+
+/* Textarea Styles */
+.textarea-flex {
+    display: flex; /* enables flexbox layout */
+    flex-direction: column; /* arranges children in a column */
+    gap: 10px; /* adds space between children */
+    margin: 20px 0; /* adds margin around the textarea */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #2F4F4F; /* dark slate gray */
+    padding: 20px; /* padding around the footer */
+    text-align: center; /* centers the text in the footer */
+    position: fixed;   /* fixes the footer at the bottom of the page */ 
+    bottom: 0; /* positions the footer at the bottom */
+    width: 100%; /* makes the footer full width */
+    font-style: bold;
+    font-size: 16px; /* sets font size for the footer text */
+    color: #f6f5f3; /* light gray */
+}
+
+footer p {
+    margin: 0; /* removes default margin from paragraph */
+    font-size: 14px; /* sets font size for the footer text */
+}
+
+main {
+    padding-bottom: 150px;
+}
+
+#introduction {
+    text-align: center;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #18435D;
+}
+
+.footer-links li {
+    margin: 0 0;
+    background-color: #18435D;
+}
+
+.footer-links a {
+    color:#f6f5f3;
+    text-decoration: none;
+    background-color: #18435D;
+}
+
+image logos-container{
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100vw;
+    padding-bottom: 20px;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+.jobs-h1, .jobs-h2 {
+    font-family: Arial, sans-serif;;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center; /* centers the heading */
+    margin: 20px 0; /* adds margin around the heading */
+}
+
+h3 {
+    color: black (0, 128, 128);
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: left; /* heading is to the left */
+}
+
+/* for the jobs.html page */
+.job-listing {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* adds space between job listings */
+    margin: 20px 0; 
+    padding: 20px; 
+    background-color: #fff; /* white background for job listing */
+}
+.job-listing h3 {
+    color: #2F4F4F; /* dark slate gray */
+    font-size: 1.5em; /* sets font size for job title */
+    font-weight: bold; /* makes the job title bold */
+    margin: 0; 
+    line-height: 1.2; 
+}
+.job-listing p {
+    color: #333; /* dark grey */
+    font-size: 1em; 
+    margin: 5px 0; /* adds margin around the job description */
+    line-height: 1.5; 
+    font-family: Arial, sans-serif; /* sets font family for job description */
+}
+.job-listing a {
+    color: #2F4F4F; /* dark slate gray */
+    text-decoration: none; /* removes underline from links */
+    font-weight: bold; /* makes the link bold */
+    margin-top: 5px; /* adds margin above the link */
+    padding: 5px 10px; /* adds padding around the link */
+}
+.job-listing a:hover {
+    text-decoration: underline; /* underlines the link on hover */
+}
+
+image dollar-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f5f3; /* light gray background */
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 20px;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
 }
