@@ -1,0 +1,434 @@
+/*
+filename: styles.css
+author: Sophie Kroezen & Akhila Sripriyadarshini Gollamudi
+created: 04/04/2025
+last modified 09/04/2025
+description: style sheet for about.html and apply.html
+*/
+
+/*apply page styling */
+* {
+    font-family: 'Public Sans', sans-serif;
+    background-color: #f6f5f3;
+}
+
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.form-grid fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+form > fieldset {
+    margin-top: 2rem;
+}
+
+.home-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 150px;
+}
+
+#form {
+    padding: 5px;
+    margin: 5px;
+}
+
+input {
+   border-radius: 7px; 
+}
+
+legend {
+    text-align: center;
+    font-weight: bold;
+}
+
+fieldset {
+    border-radius: 7px;
+    border: 2px solid #18435D;
+}
+
+.textarea-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .textarea-flex {
+        flex-direction: row;
+        gap: 1rem;
+    }
+    .textarea-flex p {
+        flex: 1;
+    }
+    .textarea-flex textarea {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+    }
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.5s;
+    color: #18435b;
+    font-weight:600;
+}
+
+nav a:hover {
+    color: #2677a8;
+}
+
+.logo {
+    float: left;
+}
+
+header h1 {
+    clear: both;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    border: 2px solid #18435D;
+    position: relative;
+    transition: background-color 0.5s ease;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+input[type="checkbox"]:checked {
+    background-color:#18435D;
+    border-color: #0f2d3f;
+}
+
+input[type="radio"] {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #18435D;
+    border-radius: 50%;
+    position: relative;
+    transition: background-color 0.5s ease;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+input[type="radio"]:checked {
+    background-color: #18435D;
+    border-color:#0f2d3f;
+}
+
+/* The input type=submit and type=reset styling are placed separately as I wasn't able to get the styling to work when placed together. */
+
+input[type="submit"] {
+    transition: 0.5s;
+}
+
+input[type="submit"]:hover {
+    color: #f6f5f3;
+    background-color: #18435b;
+}
+
+input[type="reset"] {
+    transition: 0.5s;
+}
+
+input[type="reset"]:hover {
+    color: #f6f5f3;
+    background-color: #18435b;
+}
+
+
+/* about page styling */
+
+.akhila-table {
+    border: 2px solid #18435D;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.akhila-table th, .akhila-table td {
+    border: 1px solid #18435D;
+    padding: 5px;
+}
+
+.sophie-table {
+    border: 2px solid #18435D;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.sophie-table th, .sophie-table td {
+    border: 1px solid #18435D;
+    padding: 5px;
+}
+
+.akhila-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.student-id {
+    text-align: right;
+}
+
+.sophie-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.akhila-favs {
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100vw;
+    padding-bottom: 20px;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+.akhila-favs ol, .akhila-favs li, .akhila-favs ol em {
+    color: #f6f5f3;
+    background-color: transparent;
+    width: 100%
+}
+
+.akhila-favs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.akhila-movies, .akhila-food, .akhila-travel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    padding: 0 10px;
+    scroll-snap-align: start;
+    border: 2px solid #18435D;
+    border-radius: 10px;
+    color: #f6f5f3;
+    box-sizing: border-box;
+    flex: 0 0 100vw;
+    background-color:#2677a8
+}
+
+.akhila-movies ol {
+    margin-left: 70px;
+    padding: 15px;
+    width: auto;
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    max-width: 60%;
+}
+
+.akhila-movies img {
+    width: 30%;
+    object-fit: cover;
+    border-radius: 10px;
+    height: auto;
+    max-width: 40%;
+}
+
+.akhila-food ol {
+    margin-left: 70px;
+    padding: 15px;
+    width: auto;
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    max-width: 60%;
+}
+
+.akhila-food img {
+    width: 30%;
+    object-fit: cover;
+    border-radius: 10px;
+    height: auto;
+    max-width: 40%;
+}
+
+.akhila-travel ol {
+    margin-left: 70px;
+    padding: 15px;
+    width: auto;
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    max-width: 60%;
+}
+
+.akhila-travel img {
+    width: 30%;
+    object-fit: cover;
+    border-radius: 10px;
+    height: auto;
+    max-width: 40%;
+}
+
+footer {
+    background-color:#18435D;
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #18435D;
+}
+
+.footer-links li {
+    margin: 0 0;
+    background-color: #18435D;
+}
+
+.footer-links a {
+    color:#f6f5f3;
+    text-decoration: none;
+    background-color: #18435D;
+}
+
+.sophie-favs {
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100vw;
+    padding-bottom: 20px;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+.sophie-favs ol, .sophie-favs li, .sophie-favs ol em {
+    color: #f6f5f3;
+    background-color: transparent;
+    width: 100%
+}
+
+.sophie-favs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.sophie-movies, .sophie-games, .sophie-baking {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    padding: 0 10px;
+    scroll-snap-align: start;
+    border: 2px solid #18435D;
+    border-radius: 10px;
+    color: #f6f5f3;
+    box-sizing: border-box;
+    flex: 0 0 100vw;
+    background-color:#2677a8
+}
+
+.sophie-movies ol {
+    margin-left: 70px;
+    padding: 15px;
+    width: auto;
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    max-width: 60%;
+}
+
+.sophie-movies img {
+    width: 30%;
+    object-fit: cover;
+    border-radius: 10px;
+    height: auto;
+    max-width: 40%;
+}
+
+.sophie-games ol {
+    margin-left: 70px;
+    padding: 15px;
+    width: auto;
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    max-width: 60%;
+}
+
+.sophie-games img {
+    width: 30%;
+    object-fit: cover;
+    border-radius: 10px;
+    height: auto;
+    max-width: 40%;
+}
+
+.sophie-baking ol {
+    margin-left: 70px;
+    padding: 15px;
+    width: auto;
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    max-width: 60%;
+}
+
+.sophie-baking img {
+    width: 30%;
+    object-fit: cover;
+    border-radius: 10px;
+    height: auto;
+    max-width: 40%;
+}
+
+#group-photo {
+    float: right;
+    border: 2px solid #2677a8;
+    height: 200px;
+    width: 275px;
+}

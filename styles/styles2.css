@@ -1,6 +1,6 @@
 /*
 filename: styles2.css
-author: Akhila Srirpriyadarshini Gollamudi
+author: Sophie Kroezen & Akhila Sripriyadarshini Gollamudi
 created: 08/04/2025
 last modified: 09/04/2025
 description: refers to projectpart1-1, index.html
@@ -42,10 +42,25 @@ img {
     padding: 0 15px; /* adds padding inside the container */
 }
 
+/* Navigation Bar Styles */
+.navbar {
+    background: #fff; /* white background */
+    padding: 20px;
+
+}
 
 
-
-
+/* Images/logos Styles */
+.logos {
+    display: flex;
+    justify-content: center; /* horizontally centers the images */
+    align-items: center; /* vertically centers the images */
+  }
+  
+  .logos img {
+    flex-basis: 50%; /* sets the width of the images */
+    padding: 50px 50px;
+  }
 
 
 
