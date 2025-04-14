@@ -22,7 +22,7 @@ body {
 }
 
 body {
-   font-family: 'Paaul Grotesk Soft', sans-serif;
+   font-family: 'Paul Grotesk Soft', sans-serif;
    font-size: 16px;
    background-color: #F0F8FF; /* Alice Blue */
    line-height: 1.5;
@@ -69,14 +69,6 @@ img {
     padding: 50px 50px;
   }
 
-
-
-
-
-
-
-
-
 /* ROUGH WORK- NEEDS TO BE COMPLETED 
         Page Styles */
 * {
@@ -86,13 +78,13 @@ img {
 
 /* Heading Styles */
 h1 {
-    color: purple;
+    color: black;
     font-size: 2em;
     font-weight: bold;
 }
 
 h2 {
-    color: rgb(0, 128, 128);
+    color: black (0, 128, 128);
     font-size: 1.5em;
     font-weight: bold;
 }
@@ -122,6 +114,21 @@ nav a:hover {
 }
 
 #images {
-    text-align : center;  /* center has US spelling */
+    text-align : center;
     }
-    
+
+/* Footer Styles */
+footer {
+    background-color: #2F4F4F; /* dark slate gray */
+    color: white; 
+    padding: 20px; /* padding around the footer */
+    text-align: center; /* centers the text in the footer */
+    position: fixed; 
+    bottom: 0; /* positions the footer at the bottom */
+    width: 100%; /* makes the footer full width */
+}
+
+footer p {
+    margin: 0; /* removes default margin from paragraph */
+    font-size: 14px; /* sets font size for the footer text */
+}
