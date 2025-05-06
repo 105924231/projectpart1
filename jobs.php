@@ -224,11 +224,6 @@ Images used in the job descriptions are free Canva icons that have had their col
         </ol>
         <p>Successful applicants will report to Senior IT Technician <strong>Greg Heffley</strong>.</p>
     </section>
-    <footer>
-        <a href="https://sophieella06.atlassian.net/jira/software/projects/SCPP1/boards/34/backlog">Jira Project</a>
-        <a href="https://github.com/105924231/projectpart1/tree/main">GitHub Page</a>
-        <a href="mailto:105924231@student.swin.edu.au">Email Sophie</a>
-        <a href="mailto:105931972@student.swin.edu.au">Email Akhila</a>
-    </footer>
+    <?php include 'footer.inc'; ?>
 </body>
 </html>

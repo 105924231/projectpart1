@@ -185,13 +185,6 @@
         <br>
         <br>
 
-        <footer>
-            <ul class="footer-links">
-                <li><a href="https://sophieella06.atlassian.net/jira/software/projects/SCPP1/boards/34/backlog">Jira Project</a></li>
-                <li><a href="https://github.com/105924231/projectpart1/tree/main">GitHub Page</a></li>
-                <li><a href="mailto:105924231@student.swin.edu.au">Email Sophie</a></li>
-                <li><a href="mailto:105931972@student.swin.edu.au">Email Akhila</a></li>
-            </ul>
-        </footer>
+        <?php include 'footer.inc'; ?>
     </body>
 </html>
