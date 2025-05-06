@@ -9,6 +9,9 @@ description: style sheet for about.html and apply.html
 /*apply page styling */
 * {
     font-family: 'Public Sans', sans-serif;
+}
+
+body {
     background-color: #f6f5f3;
 }
 
@@ -405,6 +408,9 @@ input[type="reset"]:hover {
     width: 275px;
 }
 
+.about-nav {
+    list-style: none;
+}
 
 
 
@@ -413,12 +419,16 @@ input[type="reset"]:hover {
 
 /* Akhila's CSS merged into this file. Some minor changes were made on 14/04/2025 by Sophie to ensure no interference between files. */
 
-body {
-    background-image: url('image/melb_city.png'); /* background image */
+.header-container {
+    background-image: url('images/melb_city.png'); /* background image */
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed; /* keeps the background image fixed when scrolling */
-    background-size: cover; /* covers the entire viewport of webpage */;
+    background-size: cover; /* covers the entire viewport of webpage */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 150px;
 }
 
 a {
@@ -432,8 +442,8 @@ ul {
 
 .icons {
     max-width: 100%; /* makes images responsive when the website changes */
-    height: 40px;
-    width: 60px
+    height: 25px;
+    width: 35px
 }
 
 /* Utility Class for Centering */
@@ -469,19 +479,7 @@ h2 {
     font-size: 1.5em;
     font-weight: bold;
     text-align: left; /* heading is to the left */
-}
-
-#headingsinfo {
-    color: red;
-}   
-
-#introduction {
-    text-align: center;
-}
-
-#images {
-    text-align : center;
-    }
+} 
 
 /* Textarea Styles */
 .textarea-flex {
@@ -499,7 +497,7 @@ footer {
     position: fixed;   /* fixes the footer at the bottom of the page */ 
     bottom: 0; /* positions the footer at the bottom */
     width: 100%; /* makes the footer full width */
-    font-style: bold;
+    font-weight: bold;
     font-size: 16px; /* sets font size for the footer text */
     color: #f6f5f3; /* light gray */
 }
