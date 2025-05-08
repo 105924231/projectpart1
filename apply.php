@@ -34,7 +34,7 @@
             <p><strong>Working Hours:</strong> 10:00 to 18:00 Monday to Friday.</p>
 
             <!-- Form for job application -->
-            <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php" id="form">
+            <form method="post" action="process_eoi.php" id="form" novalidate="novalidate">
     
                 <!-- Applicants Details Section -->
                 
