@@ -16,12 +16,12 @@
 <body>
     <header class="apply-header">
         <!-- Logo and Title Section. Logo is sourced from GenAI: create a simple logo with the words "S.A Coders" in relation to HTML.-->
-        <p><a href="http://127.0.0.1:5500/home.html" target="_blank"><img src= "images/sa_coders_logo.png" alt="S.A Coders Logo" class="logo" width="120" height="75"></a></p>
+        <p><a href="index.php" target="_blank"><img src= "images/sa_coders_logo.png" alt="S.A Coders Logo" class="logo" width="120" height="75"></a></p>
         
         <nav>
-            <a href="index.html" target="_self" title="Home">Home</a>
-            <a href="jobs.html" target="_self" title="Jobs">Jobs</a>
-            <a href="about.html" target="_self" title="About">About Us</a>
+            <a href="index.php" target="_self" title="Home">Home</a>
+            <a href="jobs.php" target="_self" title="Jobs">Jobs</a>
+            <a href="about.php" target="_self" title="About">About Us</a>
             <a href="#start" target="_self" title="Apply">Apply</a>
         </nav>
 
