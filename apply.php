@@ -14,27 +14,16 @@
 </head>
 
 <body>
-    <header class="apply-header">
-        <!-- Logo and Title Section. Logo is sourced from GenAI: create a simple logo with the words "S.A Coders" in relation to HTML.-->
-        <p><a href="index.php" target="_blank"><img src= "images/sa_coders_logo.png" alt="S.A Coders Logo" class="logo" width="120" height="75"></a></p>
-        
-        <nav>
-            <a href="index.php" target="_self" title="Home">Home</a>
-            <a href="jobs.php" target="_self" title="Jobs">Jobs</a>
-            <a href="about.php" target="_self" title="About">About Us</a>
-            <a href="#start" target="_self" title="Apply">Apply</a>
-        </nav>
-
+    <?php include 'header.inc' ?>
+        <br><br>
         <h1>Applying for a job</h1>
-    </header>
-    
          <main id="start">
             <!-- Introduction and details for potential registration -->
             <p>Hello! Are you interested in applying for a job at S.A Coders? <strong>Complete the form below and we will contact you soon.</strong></p>
             <p><strong>Working Hours:</strong> 10:00 to 18:00 Monday to Friday.</p>
 
             <!-- Form for job application -->
-            <form method="post" action="process_eoi.php" id="form" novalidate="novalidate">
+            <form method="POST" action="process_eoi.php" id="form" novalidate="novalidate">
     
                 <!-- Applicants Details Section -->
                 

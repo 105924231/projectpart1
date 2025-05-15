@@ -13,16 +13,9 @@
     <title>About Our Group</title>
 </head>
 <body>
-    <header>
-        <p><a href="index.html" target="_blank"><img src= "images/sa_coders_logo.png" alt="S.A Coders Logo" class="logo" width="120" height="75"></a></p>
-        <nav class="about-nav">
-            <li class="menu"><a href="index.html">Home</a></li>
-            <li class="menu"><a href="jobs.html">Jobs</a></li>
-            <li class="menu"><a href="#aboutus">About Us</a></li>
-            <li class="menu"><a href="apply.html">Apply</a></li>
-        </nav>
-        <h1>About Us</h1>
-    </header>
+    <?php include 'header.inc'?>
+    <br><br>
+    <h1>About Us</h1>
     
     <p id="aboutus">Our pride and joy at S.A Coders is delivering simple but effective solutions to our clients, while also having a positive community and environmental impact. Our team work very closely with one another and our desired clientele to ensure that everything is up to an 'above and beyond' standard, and we don't settle for less.</p>
     
@@ -217,10 +210,18 @@
             <dd>Home Page <em>(HTML &amp; CSS)</em></dd>
             <dd>Job Application Page <em>(HTML)</em></dd>
             <dd>Job Descriptions Page <em>(CSS)</em></dd>
+            <dd>Expressions of Interest Table <em>(SQL)</em></dd>
+            <dd>Validated Records <em>(PHP)</em></dd>
+            <dd>Jobs Table <em>(SQL)</em></dd>
             <dt><strong>Sophie</strong></dt>
             <dd>About Page <em>(HTML &amp; CSS)</em></dd>
             <dd>Job Descriptions Page <em>(HTML)</em></dd>
             <dd>Job Application Page <em>(CSS)</em></dd>
+            <dd>Modularise Common Elements <em>(PHP)</em></dd>
+            <dd>Settings File <em>(PHP)</em></dd>
+            <dd>HR Manager Queries <em>(PHP)</em></dd>
+            <dd>Updating Contributions <em>(PHP)</em></dd>
+            <dd>Enhancements <em>(PHP)</em></dd>
         </dl>
     </section>
 

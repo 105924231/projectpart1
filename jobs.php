@@ -14,16 +14,11 @@
 </head>
 
 <body>
-    <header>
-        <p><a href="index.html" target="_blank"><img src= "images/sa_coders_logo.png" alt="S.A Coders Logo" class="logo" width="120" height="75"></a></p>
-        <nav class="about-nav">
-            <li class="menu"><a href="index.html">Home</a></li>
-            <li class="menu"><a href="jobs.html">Jobs</a></li>
-            <li class="menu"><a href="#aboutus">About Us</a></li>
-            <li class="menu"><a href="apply.html">Apply</a></li>
-        </nav>
-        <h1>Position Descriptions</h1>
-    </header>
+   <?php
+    include 'header.inc';
+   ?>
+    <br><br>
+    <h1>Position Descriptions</h1>
     <p>At S.A Coders, we have many unique and talented employees with jobs that require different expertise and skills. See below the job positions we have on offer, and what we look for in our outstanding employees.</p>
 
     <hr>

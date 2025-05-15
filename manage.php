@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Expressions of Interest:</title>
-</head>
-<body>
-  <form method="GET" action="process_eoi.php">
-    <label>Search for expression of interest:</label>
-    <input type="text" name="model" required>
-    <input type="submit" value="Search">
-  </form>
-</body>
-</html>
+<?php
+require_once("settings.php");
+
+if (isset($_POST['refnum'])) {
+    $refnum = mysqli_real_escape_string($conn, $_POST['refnum'])
+    $sql = "SELECT * FROM eoi WHERE refnum LIKE '%$refnum%'";
+    $result = mysqli_query($conn, $sql);
+}
+?>

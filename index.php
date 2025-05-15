@@ -15,7 +15,23 @@
 </head>
 
 <body class="index-body">
-    <?php include 'header.inc'; ?>
+    <header class="header-container">
+        <!-- Logo and Title Section. Logo is sourced from GenAI: create a simple logo with the words "S.A Coders" in relation to HTML.-->
+        <a href="index.html"><img src="images/sa_coders_logo.png" alt="S.A Coders Logo" class="logo" width="120" height="75"></a>
+
+       
+        <!--Nav bar-->
+
+        <div class="main-menu">
+            <main>   <!-- Unordered List for the different pages in this project. They will open in a different tab.-->
+                <nav>
+                    <a href="index.html" target="_self" title="Home">Home</a>
+                    <a href="jobs.html" target="_self" title="Jobs">Jobs</a>
+                    <a href="about.html" target="_self" title="About">About Us</a>
+                    <a href="#start" target="_self" title="Apply">Apply</a>
+                </nav>
+            </main>
+        </div>
     <!-- Main content of the page. This section contains the main information about the company, including its tagline, description, mission, and industry partners. -->
     
    <section>
