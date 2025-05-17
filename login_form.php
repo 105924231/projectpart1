@@ -29,7 +29,7 @@ include 'header.inc';
             <input type="text" name="username" id="username" placeholder="Enter username..." required="required">
 
             <label for="password">Password:</label>
-            <input type="text" name="password" id="password" placeholder="Enter password..." required="required">
+            <input type="password" name="password" id="password" placeholder="Enter password..." required="required">
 
             <button type="Submit" name="login">Login</button>
         </form>

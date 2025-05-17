@@ -221,7 +221,7 @@
             <dd>Settings File <em>(PHP)</em></dd>
             <dd>HR Manager Queries <em>(PHP)</em></dd>
             <dd>Updating Contributions <em>(PHP)</em></dd>
-            <dd>Enhancements <em>(PHP)</em></dd>
+            <dd>Enhancements <em>(PHP &amp; SQL)</em></dd>
         </dl>
     </section>
 
