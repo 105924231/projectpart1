@@ -3,7 +3,7 @@ session_start();
 
 if(isset($_SESSION['attempt_again'])){
     $now = time();
-    if($now>= $_SESSION['attempt_again']){
+    if($now >= $_SESSION['attempt_again']){
         unset($_SESSION['attempt']);
         unset($_SESSION['attempt_again']);
     }
@@ -35,8 +35,12 @@ include 'header.inc';
         </form>
 
         <?php
-            if(isset($_SESSION['error'])){
-                $_SESSION['success'];
+            if (isset($_SESSION['error'])) {
+                echo "<p style='color: red;'>" . $_SESSION['error'] . "</p>";
+                unset($_SESSION['error']);
+            }
+            if (isset($_SESSION['success'])) {
+                echo "<p style='color: green;'>" . $_SESSION['success'] . "</p>";
                 unset($_SESSION['success']);
             }
         ?>

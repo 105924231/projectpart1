@@ -1,10 +1,10 @@
 <?php
 $host = "localhost";
 $username = "root";
-$pwd = "";
-$sql_db = "job_applications";
+$password = "";
+$database = "job_applications";
 
-$conn = mysqli_connect($host, $username, $pwd, $sql_db);
+$conn = mysqli_connect($host, $username, $password, $database);
 
 if (!$conn) {
     die("Connection failed. " . mysqli_connect_error());

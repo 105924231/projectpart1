@@ -28,7 +28,7 @@
                     <a href="index.html" target="_self" title="Home">Home</a>
                     <a href="jobs.html" target="_self" title="Jobs">Jobs</a>
                     <a href="about.html" target="_self" title="About">About Us</a>
-                    <a href="#start" target="_self" title="Apply">Apply</a>
+                    <a href="apply.html" target="_self" title="Apply">Apply</a>
                 </nav>
             </main>
         </div>

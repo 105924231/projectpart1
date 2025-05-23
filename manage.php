@@ -3,106 +3,165 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once("settings.php");
-
+require_once("settings.php"); // assumes $conn is your mysqli connection
 ?>
-  <form method="POST">
-    <label>What would you like to do?</label>
-    <select name="querytable" id="querytable">
-        <option value="" selected="selected">Please select</option>
-        <option value="all">View all EOIs</option>
-        <option value="position">See a particular position's EOIs</option>
-        <option value="specific_applicant">Search for a specific applicant</option>
+
+<form method="POST">
+    <label for="search_field">Search by:</label>
+    <select name="search_field" id="search_field" required>
+        <option value="">Please select</option>
+        <option value="JobReferenceNumber">Reference Number</option>
+        <option value="FirstName">First Name</option>
+        <option value="LastName">Last Name</option>
+        <option value="EmailAddress">Email</option>
     </select>
-    <input type="submit" value="Go">
-    </form> 
-    <form>
-    <label>Choose a job reference number:</label>
-    <select name="applicant" id="applicant">
-        <option value="" selected="selected">Please select</option>
-        <option value="data_analyst">(59242) Data Analyst</option>
-        <option value="software_developer">(31972) Software Developer</option>
-        <option value="it_support">(60505) IT Support</option>
-    </select>
-    <label>Search for an applicant:</label>
-    <input type="text" name="refnum" placeholder="Search here..."required>
-    <input type="submit" value="Search">
-  </form>
+
+    <input type="text" name="search_value" placeholder="Enter value..." required>
+    <button type="submit" name="search">Search</button>
+    <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete all matching expressions of interest?')">Delete</button>
+</form>
+
+<br>
 
 <?php
+$limit = 10;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $limit;
 
-$sql = "SELECT EOInumber, JobReferenceNumber, FirstName, LastName, StreetAddress, SuburbTown, State, Postcode, EmailAddress, PhoneNumber, Skill1, Skill2, Skill3, Skill4, Skill5, OtherSkills, Status FROM eoi";
-$result = $conn->query($sql);
+$filter = "";
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_field']) && isset($_POST['search_value'])) {
+    $field = $conn->real_escape_string($_POST['search_field']);
+    $value = $conn->real_escape_string($_POST['search_value']);
+    $filter = " WHERE $field LIKE '%$value%'";
+}
 
-if($result && $result->num_rows > 0) {
-    echo "<table border='1' cellpadding='5'>";
-    echo "<tr><th>EOI Number</th><th>Reference No.</th><th>First Name</th><th>Surname</th><th>Address</th><th>Suburb</th><th>State</th><th>Postcode</th><th>Email</th><th>Phone No.</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th><th>Skill 5</th><th>Other skills</th><th>Application Status</th></tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["EOInumber"] . "</td>";
-        echo "<td>" . $row["JobReferenceNumber"] . "</td>";
-        echo "<td>" . $row["FirstName"] . "</td>";
-        echo "<td>" . $row["LastName"] . "</td>";
-        echo "<td>" . $row["StreetAddress"] . "</td>";
-        echo "<td>" . $row["SuburbTown"] . "</td>";
-        echo "<td>" . $row["State"] . "</td>";
-        echo "<td>" . $row["Postcode"] . "</td>";
-        echo "<td>" . $row["EmailAddress"] . "</td>";
-        echo "<td>" . $row["PhoneNumber"] . "</td>";
-        echo "<td>" . $row["Skill1"] . "</td>";
-        echo "<td>" . $row["Skill2"] . "</td>";
-        echo "<td>" . $row["Skill3"] . "</td>";
-        echo "<td>" . $row["Skill4"] . "</td>";
-        echo "<td>" . $row["Skill5"] . "</td>";
-        echo "<td>" . $row["OtherSkills"] . "</td>";
-        echo "<td>" . $row["Status"] . "</td>";
-        echo "</tr>";
-    } 
-    echo "</table>";
-} else {
-    echo "Query failed. <br>Error: " . $conn->error;
-    if ($conn->error) {
-        echo "<br>Error: " . $conn->error;
+// COUNT total rows for pagination
+$count_sql = "SELECT COUNT(*) AS total FROM eoi" . $filter;
+$count_result = $conn->query($count_sql);
+$total_rows = $count_result->fetch_assoc()['total'];
+$total_pages = ceil($total_rows / $limit);
+
+// UPDATE status
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
+    $eoi_number = intval($_POST['eoi_number']);
+    $new_status = $conn->real_escape_string($_POST['new_status']);
+
+    $update_sql = "UPDATE eoi SET Status = '$new_status' WHERE EOInumber = $eoi_number";
+    if ($conn->query($update_sql) === TRUE) {
+        echo "<p>Status updated successfully.</p>";
+    } else {
+        echo "<p>Error updating status: " . $conn->error . "</p>";
     }
 }
 
-
-if (isset($_POST['refnum'])) {
-
-    $refnum = mysqli_real_escape_string($conn, $_POST['refnum']);
-    $sql = "SELECT * FROM eoi WHERE JobReferenceNumber LIKE '%$refnum%'";
-    $result = mysqli_query($conn, $sql);
-
-    if($result && $result->num_rows > 0) {
-        echo "<table border='1' cellpadding='5'>";
-        echo "<tr><th>EOI Number</th><th>Reference No.</th><th>First Name</th><th>Surname</th><th>Address</th><th>Suburb</th><th>State</th><th>Postcode</th><th>Email</th><th>Phone No.</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th><th>Skill 5</th><th>Other skills</th><th>Application Status</th></tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["EOInumber"] . "</td>";
-        echo "<td>" . $row["JobReferenceNumber"] . "</td>";
-        echo "<td>" . $row["FirstName"] . "</td>";
-        echo "<td>" . $row["LastName"] . "</td>";
-        echo "<td>" . $row["StreetAddress"] . "</td>";
-        echo "<td>" . $row["SuburbTown"] . "</td>";
-        echo "<td>" . $row["State"] . "</td>";
-        echo "<td>" . $row["Postcode"] . "</td>";
-        echo "<td>" . $row["EmailAddress"] . "</td>";
-        echo "<td>" . $row["PhoneNumber"] . "</td>";
-        echo "<td>" . $row["Skill1"] . "</td>";
-        echo "<td>" . $row["Skill2"] . "</td>";
-        echo "<td>" . $row["Skill3"] . "</td>";
-        echo "<td>" . $row["Skill4"] . "</td>";
-        echo "<td>" . $row["Skill5"] . "</td>";
-        echo "<td>" . $row["OtherSkills"] . "</td>";
-        echo "<td>" . $row["Status"] . "</td>";
-        echo "</tr>";
-    } 
-    echo "</table>";
+// DELETE matching EOIs
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
+    $field = $conn->real_escape_string($_POST['search_field']);
+    $value = $conn->real_escape_string($_POST['search_value']);
+    $delete_sql = "DELETE FROM eoi WHERE $field LIKE '%$value%'";
+    if ($conn->query($delete_sql) === TRUE) {
+        echo "<p>All EOIs matching '$value' in '$field' have been deleted.</p>";
     } else {
-        echo "All expressions of interest cleared or no matching applications found.";
+        echo "<p>Error deleting records: " . $conn->error . "</p>";
     }
-} 
+}
 
+// Build main SELECT query
+$sql = "SELECT * FROM eoi" . $filter . " LIMIT $limit OFFSET $offset";
+$result = $conn->query($sql);
+
+$is_search = ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search']));
+
+if ($result && $result->num_rows > 0) {
+    echo "<table border='1' cellpadding='5'>";
+    
+    // Table headers
+    if ($is_search) {
+        echo "<tr>
+            <th>EOI Number</th><th>Reference No.</th><th>First Name</th><th>Surname</th>
+            <th>Address</th><th>Suburb</th><th>State</th><th>Postcode</th>
+            <th>Email</th><th>Phone No.</th>
+            <th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th><th>Skill 5</th>
+            <th>Other Skills</th><th>Application Status</th>
+        </tr>";
+    } else {
+        echo "<tr>
+            <th>EOI Number</th><th>Reference No.</th><th>First Name</th><th>Surname</th><th>Application Status</th><th>Update Status</th>
+        </tr>";
+    }
+
+    // Table rows
+    while ($row = $result->fetch_assoc()) {
+        if ($is_search) {
+            echo "<tr>
+                <td>{$row['EOInumber']}</td>
+                <td>{$row['JobReferenceNumber']}</td>
+                <td>{$row['FirstName']}</td>
+                <td>{$row['LastName']}</td>
+                <td>{$row['StreetAddress']}</td>
+                <td>{$row['SuburbTown']}</td>
+                <td>{$row['State']}</td>
+                <td>{$row['Postcode']}</td>
+                <td>{$row['EmailAddress']}</td>
+                <td>{$row['PhoneNumber']}</td>
+                <td>{$row['Skill1']}</td>
+                <td>{$row['Skill2']}</td>
+                <td>{$row['Skill3']}</td>
+                <td>{$row['Skill4']}</td>
+                <td>{$row['Skill5']}</td>
+                <td>{$row['OtherSkills']}</td>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='eoi_number' value='{$row['EOInumber']}'>
+                        <select name='new_status'>
+                            <option value='new' " . ($row['Status'] == 'new' ? 'selected' : '') . ">new</option>
+                            <option value='current' " . ($row['Status'] == 'current' ? 'selected' : '') . ">current</option>
+                            <option value='final' " . ($row['Status'] == 'final' ? 'selected' : '') . ">final</option>
+                        </select>
+                        <button type='submit' name='update_status'>Update</button>
+                    </form>
+                </td>
+            </tr>";
+        } else {
+            echo "<tr>
+                <td>{$row['EOInumber']}</td>
+                <td>{$row['JobReferenceNumber']}</td>
+                <td>{$row['FirstName']}</td>
+                <td>{$row['LastName']}</td>
+                <td>{$row['Status']}</td>
+                <td>
+                    <form method='POST'>
+                        <input type='hidden' name='eoi_number' value='{$row['EOInumber']}'>
+                        <select name='new_status'>
+                            <option value='new' " . ($row['Status'] == 'new' ? 'selected' : '') . ">new</option>
+                            <option value='current' " . ($row['Status'] == 'current' ? 'selected' : '') . ">current</option>
+                            <option value='final' " . ($row['Status'] == 'final' ? 'selected' : '') . ">final</option>
+                        </select>
+                        <button type='submit' name='update_status'>Update</button>
+                    </form>
+                </td>
+            </tr>";
+        }
+    }
+
+    echo "</table>";
+    
+    if (!$is_search) {
+        echo "Pages: ";
+        for ($i = 1; $i <= $total_pages; $i++) {
+            if ($i == $page) {
+                $active = "style='font-weight:bold;'";
+            } else {
+    $active = "";
+}
+
+            echo "<a href='?page=$i' $active>$i</a> ";
+        }
+        echo "</div>";
+    }
+
+} else {
+    echo "<p>No applications found.</p>";
+}
 ?>
-
 
