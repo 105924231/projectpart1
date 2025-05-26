@@ -3,8 +3,9 @@
 require_once("settings.php");
 
 // Check connection
-if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
+$conn = mysqli_connect($host, $username, $password, $database);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
 // Fetch job listings
