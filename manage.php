@@ -97,7 +97,13 @@ $is_search = ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search']));
         </select>
 
         <input type="text" name="search_value" placeholder="Enter value..." value="<?= isset($_POST['search_value']) ? htmlspecialchars($_POST['search_value']) : '' ?>" required>
+
+        <button class="manage-buttons" type="submit" name="search">Search</button>
+
+        <button class="manage-buttons" type="submit" name="delete" onclick="return confirm('Are you sure you want to delete all matching expressions of interest?')">Delete</button>
     </form>
+
+    <br>
 
 <!--The ? : parts of the following code are shorthand for if-else statements, which I learned from W3Schools.-->
     <form method="POST" class="sort_form">
