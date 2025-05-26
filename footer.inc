@@ -19,5 +19,6 @@
         <a href="mailto:105924231@student.swin.edu.au">Email Sophie</a>
         <a href="mailto:105931972@student.swin.edu.au">Email Akhila</a>
         <a href="login_form.php">Login</a>
+        <a href="enhancements.php">Enhancements</a>
     </footer>
 </html>

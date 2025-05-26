@@ -16,6 +16,7 @@ include 'header.inc';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
     <title>S.A Coder's Manager Portal</title>
 </head>
 <body>
@@ -36,15 +37,19 @@ include 'header.inc';
 
         <?php
             if (isset($_SESSION['error'])) {
-                echo "<p style='color: red;'>" . $_SESSION['error'] . "</p>";
+                echo "<p class='login-error'>" . $_SESSION['error'] . "</p>";
                 unset($_SESSION['error']);
             }
             if (isset($_SESSION['success'])) {
-                echo "<p style='color: green;'>" . $_SESSION['success'] . "</p>";
+                echo "<p class='login-success'>" . $_SESSION['success'] . "</p>";
                 unset($_SESSION['success']);
             }
+
+            include 'footer.inc';
         ?>
+
     </div>
+ 
 </body>
 </html>
 

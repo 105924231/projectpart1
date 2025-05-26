@@ -13,6 +13,8 @@ description: style sheet for about.html and apply.html
 
 body {
     background-color: #f6f5f3;
+    margin: 0;
+    padding: 0px;
 }
 
 .form-grid {
@@ -492,7 +494,8 @@ h2 {
 /* Footer Styles */
 footer {
     background-color: #2F4F4F; /* dark slate gray */
-    padding: 20px; /* padding around the footer */
+    padding-top: 20px; /* padding around the footer */
+    padding-bottom: 20px;
     text-align: center; /* centers the text in the footer */
     position: fixed;   /* fixes the footer at the bottom of the page */ 
     bottom: 0; /* positions the footer at the bottom */
@@ -555,7 +558,7 @@ image logos-container{
 }
 
 h3 {
-    color: black (0, 128, 128);
+    color: black;
     font-size: 1.5em;
     font-weight: bold;
     text-align: left; /* heading is to the left */
@@ -609,4 +612,81 @@ image dollar-icon {
     padding: 0;
     margin: 0;
     scroll-behavior: smooth;
+}
+
+
+/* PROJECT PART 2 STYLING */
+
+.login-error {
+    color: red;
+    font-weight: bold;
+}
+
+.login-success {
+    color: green;
+    font-weight: bold;
+}
+
+.pagination {
+    margin-top: auto;
+    margin-bottom: 100px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 100;
+}
+
+.pagination-link {
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #0f2d3f;
+    border: 1px solid #2F4F4F;
+    margin: 0 3px;
+    border-radius: 4px;
+}
+
+.pagination-link:hover {
+    color: #0f2d3f;
+}
+
+.manage-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-left: 0px;
+    padding-top: 40px;
+}
+
+.page-wrapper > *:not(.pagination) {
+    flex-grow: 1;
+    padding-left: 0px;
+}
+
+.active-page {
+    font-weight: bold;
+    background-color:#2677a8
+}
+
+.search_form {
+    margin-top: 100px;
+    clear: both;
+}
+
+.search-table {
+    width: auto;
+    max-width: 1200px;
+    border-collapse: collapse; 
+    margin-top: 20px;
+}
+
+.search-table, 
+.search-table th, 
+.search-table td {
+    border: 1px solid #0f2d3f;
+}
+
+.search-table th, 
+.search-table td {
+    padding: 5px;
+    text-align: left;
 }
