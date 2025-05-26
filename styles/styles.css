@@ -502,6 +502,9 @@ footer {
     font-weight: bold;
     font-size: 16px; /* sets font size for the footer text */
     color: #f6f5f3; /* light gray */
+    display: flex;
+    justify-content: center;
+    gap: 40px;
 }
 
 footer p {
@@ -522,16 +525,25 @@ main {
     padding: 0;
     margin: 0;
     background-color: #18435D;
-}
-
-.footer-links li {
-    margin: 0 0;
-    background-color: #18435D;
+    display: flex;
 }
 
 .footer-links a {
     color:#f6f5f3;
     text-decoration: none;
+}
+
+.footer-links a:link,
+.footer-links a:visited,
+.footer-links a:hover,
+.footer-links a:active {
+    color: #f6f5f3;
+    text-decoration: none;
+}
+
+footer a {
+  color: #e5eff3 !important;
+  text-decoration: none !important;
 }
 
 image logos-container{
@@ -713,19 +725,6 @@ image dollar-icon {
     padding: 10px 0; 
 }
 
-.footer-links a:link,
-.footer-links a:visited,
-.footer-links a:hover,
-.footer-links a:active {
-    color: #f6f5f3;
-    text-decoration: none;
-}
-
-footer a {
-  color: #e5eff3 !important;
-  text-decoration: none !important;
-}
-
 .login-container {
     background-color: #d9dde8;
     padding: 30px 40px;
@@ -776,4 +775,12 @@ footer a {
 .login-form button[type="submit"]:hover {
     color: #f6f5f3;
     background-color: #18435b
+}
+
+.enhancements-container {
+    padding: 10px;
+}
+
+.enhancements-container li {
+    list-style: circle;
 }
