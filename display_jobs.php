@@ -10,7 +10,7 @@ if (!$conn) {
 
 // Fetch job listings
 $query = "SELECT * FROM jobs";
-$result = $mysqli->query($query);
+$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
