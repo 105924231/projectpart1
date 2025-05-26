@@ -6,7 +6,70 @@ error_reporting(E_ALL);
 require_once("settings.php");
 
 include 'header.inc';
+
+//Sorting tutorial/inspiration came from the following: https://www.youtube.com/watch?v=ft-B4DFWUUc
+
+$limit = 10;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $limit;
+
+$allowed_fields = ['EOInumber', 'JobReferenceNumber', 'FirstName', 'LastName'];
+$allowed_orders = ['ASC', 'DESC'];
+
+$filter = "";
+$sort_field = 'EOInumber'; // default sort field
+$sort_order = 'ASC';       // default sort order
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['search_field'], $_POST['search_value'])) {
+        $field = $conn->real_escape_string($_POST['search_field']);
+        $value = $conn->real_escape_string($_POST['search_value']);
+        $filter = " WHERE $field LIKE '%$value%'";
+    }
+
+    if (isset($_POST['sort_field']) && in_array($_POST['sort_field'], $allowed_fields)) {
+        $sort_field = $_POST['sort_field'];
+    }
+    if (isset($_POST['sort_order']) && in_array($_POST['sort_order'], $allowed_orders)) {
+        $sort_order = $_POST['sort_order'];
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
+    $eoi_number = intval($_POST['eoi_number']);
+    $new_status = $conn->real_escape_string($_POST['new_status']);
+
+    $update_sql = "UPDATE eoi SET Status = '$new_status' WHERE EOInumber = $eoi_number";
+    if ($conn->query($update_sql) === TRUE) {
+        echo "<p>Status updated successfully.</p>";
+    } else {
+        echo "<p>Error updating status: " . $conn->error . "</p>";
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
+    $field = $conn->real_escape_string($_POST['search_field']);
+    $value = $conn->real_escape_string($_POST['search_value']);
+    $delete_sql = "DELETE FROM eoi WHERE $field LIKE '%$value%'";
+    if ($conn->query($delete_sql) === TRUE) {
+        echo "<p>All EOIs matching '$value' in '$field' have been deleted.</p>";
+    } else {
+        echo "<p>Error deleting records: " . $conn->error . "</p>";
+    }
+}
+
+$count_sql = "SELECT COUNT(*) AS total FROM eoi" . $filter;
+$count_result = $conn->query($count_sql);
+$total_rows = $count_result->fetch_assoc()['total'];
+$total_pages = ceil($total_rows / $limit);
+
+$sql = "SELECT * FROM eoi" . $filter . " ORDER BY $sort_field $sort_order LIMIT $limit OFFSET $offset";
+$result = $conn->query($sql);
+
+$is_search = ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search']));
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,83 +84,45 @@ include 'header.inc';
     <title>Manager Homepage</title>
 </head>
 <body>
-    <div class="manage-wrapper">
+<div class="manage-wrapper">
 
-        <form method="POST" class="search_form">
-            <label for="search_field">Search by:</label>
-            <select name="search_field" id="search_field" required>
-                <option value="">Please select</option>
-                <option value="JobReferenceNumber" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'JobReferenceNumber' ? 'selected' : '' ?>>Reference Number</option>
-                <option value="FirstName" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'FirstName' ? 'selected' : '' ?>>First Name</option>
-                <option value="LastName" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'LastName' ? 'selected' : '' ?>>Last Name</option>
-                <option value="EmailAddress" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'EmailAddress' ? 'selected' : '' ?>>Email</option>
-            </select>
+    <form method="POST" class="search_form">
+        <label for="search_field">Search by:</label>
+        <select name="search_field" id="search_field" required>
+            <option value="">Please select</option>
+            <option value="JobReferenceNumber" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'JobReferenceNumber' ? 'selected' : '' ?>>Reference Number</option>
+            <option value="FirstName" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'FirstName' ? 'selected' : '' ?>>First Name</option>
+            <option value="LastName" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'LastName' ? 'selected' : '' ?>>Last Name</option>
+            <option value="EmailAddress" <?= isset($_POST['search_field']) && $_POST['search_field'] === 'EmailAddress' ? 'selected' : '' ?>>Email</option>
+        </select>
 
-            <input type="text" name="search_value" placeholder="Enter value..." value="<?= isset($_POST['search_value']) ? htmlspecialchars($_POST['search_value']) : '' ?>" required>
+        <input type="text" name="search_value" placeholder="Enter value..." value="<?= isset($_POST['search_value']) ? htmlspecialchars($_POST['search_value']) : '' ?>" required>
+    </form>
 
-            <button type="submit" name="search">Search</button>
+<!--The ? : parts of the following code are shorthand for if-else statements, which I learned from W3Schools.-->
+    <form method="POST" class="sort_form">
+        <label for="sort_field">Sort by:</label>
+        <select name="sort_field" id="sort_field">
+            <option value="EOInumber" <?= (isset($_POST['sort_field']) && $_POST['sort_field'] == 'EOInumber') ? 'selected' : '' ?>>EOI Number</option>
+            <option value="JobReferenceNumber" <?= (isset($_POST['sort_field']) && $_POST['sort_field'] == 'JobReferenceNumber') ? 'selected' : '' ?>>Reference Number</option>
+            <option value="FirstName" <?= (isset($_POST['sort_field']) && $_POST['sort_field'] == 'FirstName') ? 'selected' : '' ?>>First Name</option>
+            <option value="LastName" <?= (isset($_POST['sort_field']) && $_POST['sort_field'] == 'LastName') ? 'selected' : '' ?>>Last Name</option>
+        </select>
 
-            <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete all matching expressions of interest?')">Delete</button>
+        <select name="sort_order" id="sort_order">
+            <option value="ASC" <?= (isset($_POST['sort_order']) && $_POST['sort_order'] == 'ASC') ? 'selected' : '' ?>>Ascending</option>
+            <option value="DESC" <?= (isset($_POST['sort_order']) && $_POST['sort_order'] == 'DESC') ? 'selected' : '' ?>>Descending</option>
+        </select>
 
-            <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])): ?>
-                <button type="button" onclick="window.location.href='manage.php'">Reset</button>
-            <?php endif; ?>
-        </form>
+        <button class="manage-buttons" type="submit" name="sort">Sort</button>
+    </form>
 
     <br>
+
     <?php
-    $limit = 10;
-    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
-    $offset = ($page - 1) * $limit;
-
-    $filter = "";
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_field']) && isset($_POST['search_value'])) {
-        $field = $conn->real_escape_string($_POST['search_field']);
-        $value = $conn->real_escape_string($_POST['search_value']);
-        $filter = " WHERE $field LIKE '%$value%'";
-    }
-
-    // COUNT total rows for pagination
-    $count_sql = "SELECT COUNT(*) AS total FROM eoi" . $filter;
-    $count_result = $conn->query($count_sql);
-    $total_rows = $count_result->fetch_assoc()['total'];
-    $total_pages = ceil($total_rows / $limit);
-
-    // UPDATE status
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
-        $eoi_number = intval($_POST['eoi_number']);
-        $new_status = $conn->real_escape_string($_POST['new_status']);
-
-        $update_sql = "UPDATE eoi SET Status = '$new_status' WHERE EOInumber = $eoi_number";
-        if ($conn->query($update_sql) === TRUE) {
-            echo "<p>Status updated successfully.</p>";
-        } else {
-            echo "<p>Error updating status: " . $conn->error . "</p>";
-        }
-    }
-
-    // DELETE matching EOIs
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
-        $field = $conn->real_escape_string($_POST['search_field']);
-        $value = $conn->real_escape_string($_POST['search_value']);
-        $delete_sql = "DELETE FROM eoi WHERE $field LIKE '%$value%'";
-        if ($conn->query($delete_sql) === TRUE) {
-            echo "<p>All EOIs matching '$value' in '$field' have been deleted.</p>";
-        } else {
-            echo "<p>Error deleting records: " . $conn->error . "</p>";
-        }
-    }
-
-    // Build main SELECT query
-    $sql = "SELECT * FROM eoi" . $filter . " LIMIT $limit OFFSET $offset";
-    $result = $conn->query($sql);
-
-    $is_search = ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search']));
-
     if ($result && $result->num_rows > 0) {
         echo "<table class='search-table'>";
 
-        // Table headers
         if ($is_search) {
             echo "<tr>
                 <th>EOI Number</th><th>Reference No.</th><th>First Name</th><th>Surname</th>
@@ -112,7 +137,6 @@ include 'header.inc';
             </tr>";
         }
 
-        // Table rows
         while ($row = $result->fetch_assoc()) {
             if ($is_search) {
                 echo "<tr>
@@ -134,6 +158,7 @@ include 'header.inc';
                     <td>{$row['OtherSkills']}</td>
                 </tr>";
             } else {
+                //In the option value statements, the code is checking if the row's status data is selected as either new, current or final. If it is, then it outputs that option.
                 echo "<tr>
                     <td>{$row['EOInumber']}</td>
                     <td>{$row['JobReferenceNumber']}</td>
@@ -161,21 +186,33 @@ include 'header.inc';
         echo "<p>No applications found.</p>";
     }
     ?>
+    <!--I used the following W3Schools event page https://www.w3schools.com/jsref/event_onclick.asp to help me get my resset button to work, as I wasn't able to get it to work otherwise.-->
+    <div class="reset">
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])): ?>
+        <button class="manage-buttons" type="button" onclick="window.location.href='manage.php'">Reset</button>
+    <?php endif; ?>
+    </div>
 
     <div class="pagination">
-        Pages:
-        <?php
-        for ($i = 1; $i <= $total_pages; $i++) {
-            $class = ($i == $page) ? "active-page" : "";
-            echo "<a class='pagination-link $class' href='?page=$i'>$i</a> ";
-        }
-        ?>
+
+    <?php
+    //This portion of code builds an array of the sort & search parameters, so that when the page is reloaded or the pagination feature is used, it will maintain the search information or the sort style the user wants.
+    $query_params = [];
+    if (isset($_POST['search_field'])) $query_params['search_field'] = $_POST['search_field'];
+    if (isset($_POST['search_value'])) $query_params['search_value'] = $_POST['search_value'];
+    $query_params['sort_field'] = $sort_field;
+    $query_params['sort_order'] = $sort_order;
+
+    for ($i = 1; $i <= $total_pages; $i++) {
+        $class = ($i == $page) ? "active-page" : "";
+        $query_params['page'] = $i;
+        $qs = http_build_query($query_params);
+        echo "<a class='pagination-link $class' href='manage.php?$qs'>$i</a> ";
+    }
+    ?>
     </div>
 
 </div>
-</body>
-
 <?php include 'footer.inc'; ?>
+</body>
 </html>
-
-
