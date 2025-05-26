@@ -33,9 +33,9 @@
             
                         <p><label for="jobrefnum">Job Reference Number:</label>
                             <select name="jobrefnum" id="jobrefnum" required="required">
-                                <option value="job1">59242</option>
-                                <option value="job2">31972</option>
-                                <option value="job3">60505</option>
+                                <option value="59242">59242</option>
+                                <option value="31972">31972</option>
+                                <option value="60505">60505</option>
                             </select>
                         </p>
         
@@ -95,9 +95,9 @@
                 <fieldset class="contact">
                     <legend>Contact Details</legend>
                     <label for="email">Enter Email:</label>
-                        <input type="email" id="email" pattern=".+@example\.com" size="35" required="required" /><br><br>
+                        <input type="email" name="email" id="email" pattern=".+@example\.com" size="35" required="required" /><br><br>
                     <label for="phonenum">Phone Number:</label>
-                        <input type="tel" id="phonenum" pattern="\d{4}-\d{3}-\d{3}" required />
+                        <input type="tel" name="phonenum" id="phonenum" pattern="\d{4}-\d{3}-\d{3}" required />
                         <small>Format: 1234-567-890</small>
                         <br><br>
                     <label for="contact">Preferred Contact Method:</label><br>  

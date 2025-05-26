@@ -222,6 +222,7 @@
             <dd>HR Manager Queries <em>(PHP)</em></dd>
             <dd>Updating Contributions <em>(PHP)</em></dd>
             <dd>Enhancements <em>(PHP &amp; SQL)</em></dd>
+            <dd>Styling for manage.php and login_form.php <em>(CSS)</em></dd>
         </dl>
     </section>
 

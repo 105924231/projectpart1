@@ -784,3 +784,7 @@ image dollar-icon {
 .enhancements-container li {
     list-style: circle;
 }
+
+.processed-form {
+    padding: 10px;
+}

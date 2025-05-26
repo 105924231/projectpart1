@@ -6,7 +6,10 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-session_start();           
+session_start();         
+
+require_once("settings.php");
+include 'header.inc';
 
 /*-------
   1. Ensure this page is reached via POST
@@ -15,12 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: apply.php');
     exit();
 }
+
 /*-------
   2. Connect to MySQL
 --------*/
-$mysqli = new mysqli('localhost', 'root', '', 'job_descriptions');
-if ($mysqli->connect_error) {
-    die('Database connection failed: ' . $mysqli->connect_error);
+$conn = mysqli_connect($host, $username, $password, $database);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
 /*-------
@@ -29,33 +33,36 @@ if ($mysqli->connect_error) {
 $createTableSQL = "
 CREATE TABLE IF NOT EXISTS eoi (
     EOInumber      INT AUTO_INCREMENT PRIMARY KEY,
-    jobrefnum      VARCHAR(20),
+    jobreferencenumber      VARCHAR(20),
     firstname      VARCHAR(20),
-    middlename     VARCHAR(20),
     lastname       VARCHAR(20),
-    dob            DATE,
-    gender         VARCHAR(10),
-    address        VARCHAR(40),
-    suburb         VARCHAR(40),
+    streetaddress        VARCHAR(40),
+    suburbtown         VARCHAR(40),
     state          CHAR(3),
     postcode       CHAR(4),
-    email          VARCHAR(100),
-    phonenum       VARCHAR(15),
-    contact        VARCHAR(5),
-    skills         TEXT,
+    emailaddress          VARCHAR(100),
+    phonenumber       VARCHAR(15),
+    skill1         VARCHAR(50),
+    skill2         VARCHAR(50),
+    skill3         VARCHAR(50),
+    skill4         VARCHAR(50),
+    skill5         VARCHAR(50),
     otherskills    TEXT,
-    experience     TEXT,
+    status         ENUM('new','current','final') NOT NULL DEFAULT 'new',
     lodged         TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;";
-$mysqli->query($createTableSQL);
+$conn->query($createTableSQL);
 
 /*-------
   4. Helper – clean & escape
 --------*/
-function clean($str, $mysqli)
-{
-    return htmlspecialchars(trim($mysqli->real_escape_string($str)));
+function clean($str, $conn) {
+    if (!is_string($str)) {
+        $str = '';
+    }
+    return htmlspecialchars(trim($conn->real_escape_string($str)));
 }
+
 
 /*-------
   5. Collect, sanitise & validate input
@@ -63,32 +70,31 @@ function clean($str, $mysqli)
 $errors = [];
 
 // Job reference (required, simple digits check)
-$jobrefnum = clean($_POST['jobrefnum'] ?? '', $mysqli);
+$jobrefnum = clean($_POST['jobrefnum'] ?? '', $conn);
 if (!preg_match('/^\d{5}$/', $jobrefnum)) {
     $errors[] = 'Job reference must be a 5-digit number.';
 }
 
 // First name (required)
-$firstname = clean($_POST['firstname'] ?? '', $mysqli);
+$firstname = clean($_POST['firstname'] ?? '', $conn);
 if (!preg_match('/^[A-Za-z]{1,20}$/', $firstname)) {
     $errors[] = 'First name must be alphabetic and ≤ 20 chars.';
 }
 
-// Middle name (optional)
-$middlename = clean($_POST['middlename'] ?? '', $mysqli);
+// Middle name (optional) - you can store or ignore as needed (not in table)
+$middlename = clean($_POST['middlename'] ?? '', $conn);
 if ($middlename !== '' && !preg_match('/^[A-Za-z]{1,20}$/', $middlename)) {
     $errors[] = 'Middle name must be alphabetic and ≤ 20 chars.';
 }
 
 // Last name (required)
-$lastname = clean($_POST['lastname'] ?? '', $mysqli);
+$lastname = clean($_POST['lastname'] ?? '', $conn);
 if (!preg_match('/^[A-Za-z]{1,20}$/', $lastname)) {
     $errors[] = 'Last name must be alphabetic and ≤ 20 chars.';
 }
 
-// Date of birth (optional, dd/mm/yyyy)
+// Date of birth (optional, dd/mm/yyyy) - not stored in table here
 $dobRaw = $_POST['dob'] ?? '';
-$dobSQL = null;
 if ($dobRaw !== '') {
     if (!preg_match('#^\d{1,2}/\d{1,2}/\d{4}$#', $dobRaw)) {
         $errors[] = 'Date of Birth must be dd/mm/yyyy.';
@@ -96,63 +102,71 @@ if ($dobRaw !== '') {
         [$d, $m, $y] = explode('/', $dobRaw);
         if (!checkdate($m, $d, $y)) {
             $errors[] = 'Date of Birth is not a valid calendar date.';
-        } else {
-            $dobSQL = sprintf('%04d-%02d-%02d', $y, $m, $d); // to MySQL DATE
         }
+        // Not storing dobSQL as not in table
     }
 }
 
-// Gender (required)
-$gender = clean($_POST['gender'] ?? '', $mysqli);
+// Gender (required) - not stored in table, but you can add if needed
+$gender = clean($_POST['gender'] ?? '', $conn);
 if (!in_array($gender, ['male', 'female'])) {
     $errors[] = 'Please select a gender.';
 }
 
 // Address + suburb (required)
-$address = clean($_POST['address'] ?? '', $mysqli);
-$suburb  = clean($_POST['suburb'] ?? '', $mysqli);
-if ($address === '' || $suburb === '') {
+$streetaddress = clean($_POST['address'] ?? '', $conn);
+$suburbtown  = clean($_POST['suburb'] ?? '', $conn);
+if ($streetaddress === '' || $suburbtown === '') {
     $errors[] = 'Street address and suburb are required.';
 }
 
 // State (required – matches select list values)
-$state = clean($_POST['state'] ?? '', $mysqli);
+$state = clean($_POST['state'] ?? '', $conn);
 $validStates = ['vic', 'nsw', 'qld', 'wa', 'sa', 'nt', 'tas', 'act'];
 if (!in_array($state, $validStates)) {
     $errors[] = 'Please choose a valid state.';
 }
 
 // Postcode (required, 4 digits)
-$postcode = clean($_POST['postcode'] ?? '', $mysqli);
+$postcode = clean($_POST['postcode'] ?? '', $conn);
 if (!preg_match('/^\d{4}$/', $postcode)) {
     $errors[] = 'Postcode must be 4 digits.';
 }
 
 // Email (required, RFC-valid)
-$email = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
-if ($email === false) {
+$emailaddress = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
+if ($emailaddress === false) {
     $errors[] = 'Invalid email format.';
 }
 
 // Phone (required, 1234-567-890)
-$phonenum = clean($_POST['phonenum'] ?? '', $mysqli);
-if (!preg_match('/^\d{4}-\d{3}-\d{3}$/', $phonenum)) {
-    $errors[] = 'Phone number must be 1234-567-890.';
+$phonenum = trim($_POST['phonenum'] ?? '');
+$phonenum = clean($phonenum, $conn);
+
+if (!preg_match("/^\d{4}-\d{3}-\d{3}$/", $phonenum)) {
+    $errors[] = 'Phone number must be in format 1234-567-890.';
 }
 
-// Preferred contact (required)
-$contact = clean($_POST['contact'] ?? '', $mysqli);
+// Preferred contact (required) - not stored in table, can be stored if needed
+$contact = clean($_POST['contact'] ?? '', $conn);
 if (!in_array($contact, ['email', 'phone'])) {
     $errors[] = 'Select a preferred contact method.';
 }
 
-// Skills (checkbox array)
+// Skills (checkbox array) - split into 5 skill columns
 $skillsArr = $_POST['lang'] ?? [];
-$skills    = clean(implode(', ', $skillsArr), $mysqli);
+
+$skill1 = clean($skillsArr[0] ?? null, $conn);
+$skill2 = clean($skillsArr[1] ?? null, $conn);
+$skill3 = clean($skillsArr[2] ?? null, $conn);
+$skill4 = clean($skillsArr[3] ?? null, $conn);
+$skill5 = clean($skillsArr[4] ?? null, $conn);
 
 // Other skills + experience
-$otherskills = clean($_POST['skills'] ?? '', $mysqli);
-$experience  = clean($_POST['experience'] ?? '', $mysqli);
+$otherskills = clean($_POST['skills'] ?? '', $conn);
+
+// Status default
+$status = 'new';
 
 /*-------
   6. If errors, display message
@@ -167,17 +181,19 @@ if (!empty($errors)) {
 /*-------
   7. Insert record using prepared statement
 -------*/
-$stmt = $mysqli->prepare("
+$stmt = $conn->prepare("
     INSERT INTO eoi
-    (jobrefnum, firstname, middlename, lastname, dob, gender, address, suburb,
-     state, postcode, email, phonenum, contact, skills, otherskills, experience)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    (jobreferencenumber, firstname, lastname, streetaddress, suburbtown, state, postcode, emailaddress, phonenumber, skill1, skill2, skill3, skill4, skill5, otherskills, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
+
 $stmt->bind_param(
     'ssssssssssssssss',
-    $jobrefnum, $firstname, $middlename, $lastname, $dobSQL,
-    $gender, $address, $suburb, $state, $postcode,
-    $email, $phonenum, $contact, $skills, $otherskills, $experience
+    $jobrefnum, $firstname, $lastname,
+    $streetaddress, $suburbtown, $state, $postcode,
+    $emailaddress, $phonenum,
+    $skill1, $skill2, $skill3, $skill4, $skill5,
+    $otherskills, $status
 );
 
 if (!$stmt->execute()) {
@@ -186,7 +202,7 @@ if (!$stmt->execute()) {
 
 $EOInumber = $stmt->insert_id;
 $stmt->close();
-$mysqli->close();
+$conn->close();
 
 /*-------
   8. Confirmation page
@@ -198,7 +214,7 @@ $mysqli->close();
     <meta charset="UTF-8">
     <title>EOI Confirmation</title>
 </head>
-<body>
+<body class="processed-form">
     <h1>Thank you for your application!</h1>
     <p>Your Expression of Interest has been received successfully.</p>
     <p><strong>Your EOI Number:</strong> <?php echo $EOInumber; ?></p>
@@ -206,3 +222,6 @@ $mysqli->close();
     <p><a href="apply.php">Submit another application</a></p>
 </body>
 </html>
+<?php
+include 'footer.inc';
+?>
