@@ -105,7 +105,7 @@ $is_search = ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search']));
 
     <br>
 
-<!--The ? : parts of the following code are shorthand for if-else statements, which I learned from W3Schools.-->
+<!--The ? : parts of the following code are shorthand for if-else statements, which I learned from https://www.ionos.com/digitalguide/websites/web-development/php-if-else/#:~:text=The%20PHP%20if%2Delse%20shorthand,another%20value%20if%20it's%20false..-->
     <form method="POST" class="sort_form">
         <label for="sort_field">Sort by:</label>
         <select name="sort_field" id="sort_field">
